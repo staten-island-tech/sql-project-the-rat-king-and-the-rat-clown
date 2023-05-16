@@ -5,7 +5,7 @@
 </template>
 
 <script setup>
-import { supabase } from '../supabase'
+import { supabase } from './supabase'
 import { onMounted, ref } from 'vue'
 
 const countries = ref([])
