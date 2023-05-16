@@ -2,11 +2,17 @@
   <ul>
     <li v-for="profile in prof">{{ profile }}</li>
   </ul>
+  <BarChart />
 </template>
 
-<script setup>
+<script>
 import { supabase } from './supabase'
 import { onMounted, ref } from 'vue'
+import BarChart from './components/PollingChart.vue'
+export default {
+  name: 'App',
+  components: { BarChart }
+}
 
 const prof = ref([])
 
