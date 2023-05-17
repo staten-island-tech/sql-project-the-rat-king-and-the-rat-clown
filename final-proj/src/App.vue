@@ -2,18 +2,14 @@
   <ul>
     <li v-for="profile in prof">{{ profile }}</li>
   </ul>
+  <button @click="make()">Create Chart</button>
   <BarChart />
 </template>
 
-<script>
+<script setup>
 import { supabase } from './supabase'
 import { onMounted, ref } from 'vue'
 import BarChart from './components/PollingChart.vue'
-export default {
-  name: 'App',
-  components: { BarChart }
-}
-
 const prof = ref([])
 
 onMounted(() => {
@@ -23,6 +19,16 @@ onMounted(() => {
 const yes = async function () {
   let { data } = await supabase.from('profiles').select('username')
   prof.value = data
+}
+</script>
+
+<script>
+export default {
+  name: 'App',
+  components: { BarChart },
+  methods: {
+    make() {}
+  }
 }
 </script>
 
