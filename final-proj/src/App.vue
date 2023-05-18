@@ -2,8 +2,8 @@
   <ul>
     <li v-for="profile in prof">{{ profile }}</li>
   </ul>
-  <button @click="make()">Create Chart</button>
-  <BarChart />
+  <input v-model="label" placeholder="Ex: Jan,Feb,Mar" />
+  <button @click="make">Create Chart</button>
 </template>
 
 <script setup>
