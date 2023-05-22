@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
-import Protected from '../views/Protected.vue'
+import About from '../views/About.vue'
 import { userSessionStore } from '../stores/userSession'
 
 const router = createRouter({
@@ -12,9 +12,9 @@ const router = createRouter({
       component: Home
     },
     {
-      path: '/protected',
-      name: 'protected',
-      component: Protected,
+      path: '/about',
+      name: 'about',
+      component: About,
       meta: {
         needsAuth: true
       }
