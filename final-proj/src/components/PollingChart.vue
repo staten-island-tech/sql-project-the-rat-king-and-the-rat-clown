@@ -1,5 +1,11 @@
 <template>
-  <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+  <Bar
+    id="my-chart-id"
+    :options="chartOptions"
+    :data="chartData"
+    v-for="labels in chartdata"
+    :key="labels"
+  />
 </template>
 
 <script>
@@ -21,12 +27,9 @@ export default {
   components: { Bar },
   data() {
     return {
-      chartData: {
-        labels: ['January', 'February', 'March'],
-        datasets: [{ data: [40, 20, 12] }]
-      },
-      chartOptions: {
-        responsive: true
+      Prop: {
+        chartData: Object,
+        chartOptions: Object
       }
     }
   }

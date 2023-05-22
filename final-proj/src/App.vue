@@ -2,8 +2,10 @@
   <ul>
     <li v-for="profile in prof">{{ profile }}</li>
   </ul>
-  <input v-model="label" placeholder="Ex: Jan,Feb,Mar" />
-  <button @click="make">Create Chart</button>
+  <button @click="make">Create Chart</button>\
+  <div>
+    <BarChart :chartData="chartData" :chartOptions="chartOptions" />
+  </div>
 </template>
 
 <script setup>
@@ -26,8 +28,16 @@ const yes = async function () {
 export default {
   name: 'App',
   components: { BarChart },
-  methods: {
-    make() {}
+  data() {
+    return {
+      chartData: {
+        labels: ['yes', 'no', 'yess'],
+        datasets: [{ data: [1, 2, 3] }]
+      },
+      chartOptions: {
+        responsive: true
+      }
+    }
   }
 }
 </script>
