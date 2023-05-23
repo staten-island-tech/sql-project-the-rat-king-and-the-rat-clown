@@ -1,11 +1,5 @@
 <template>
-  <Bar
-    id="my-chart-id"
-    :options="chartOptions"
-    :data="chartData"
-    v-for="labels in chartdata"
-    :key="labels"
-  />
+  <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
 </template>
 
 <script>
@@ -27,11 +21,21 @@ export default {
   components: { Bar },
   data() {
     return {
-      Prop: {
-        chartData: Object,
-        chartOptions: Object
+      chartData: {
+        labels: ['yes', 'no', 'yess'],
+        datasets: [{ data: [1, 2, 3] }]
+      },
+      chartOptions: {
+        responsive: true
       }
     }
+  },
+  async mounted() {
+    try {
+      const get = async function () {
+        let { data } = await supabase.from('countries').select('name', 'some number')
+      }
+    } catch (error) {}
   }
 }
 </script>
