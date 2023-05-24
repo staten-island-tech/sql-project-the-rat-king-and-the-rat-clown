@@ -20,6 +20,7 @@ onMounted(() => {
 const yes = async function () {
   let { data } = await supabase.from('profiles').select('username')
   prof.value = data
+  console.log(data)
 }
 </script>
 

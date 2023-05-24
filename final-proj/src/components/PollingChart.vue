@@ -1,9 +1,10 @@
 <template>
-  <Bar id="my-chart-id" :options="chartOptions" :data="chartData" />
+  <Bar id="my-chart-id" v-if="loaded" :options="chartOptions" :data="chartData" />
 </template>
 
 <script>
 import { Bar } from 'vue-chartjs'
+import { onMounted, ref } from 'vue'
 import {
   Chart as ChartJS,
   Title,
@@ -21,8 +22,9 @@ export default {
   components: { Bar },
   data() {
     return {
+      loaded: false,
       chartData: {
-        labels: ['yes', 'no', 'yess'],
+        labels: [],
         datasets: [{ data: [1, 2, 3] }]
       },
       chartOptions: {
@@ -32,8 +34,14 @@ export default {
   },
   async mounted() {
     try {
-      const get = async function () {
-        let { data } = await supabase.from('countries').select('name', 'some number')
+      onMounted(() => {
+        getsupabase()
+      })
+
+      async function getsupabase() {
+        let { data } = await supabase.from('countries').select('name')
+        let data2 = Object.values(data)
+        this.chartData.labels[0].push(data2.values)
       }
     } catch (error) {}
   }
