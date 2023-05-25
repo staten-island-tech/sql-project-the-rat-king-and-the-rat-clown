@@ -38,9 +38,10 @@ export default {
         getsupabase()
       })
 
-      async function getsupabase() {
+      let getsupabase = async function () {
         let { data } = await supabase.from('countries').select('name')
         let data2 = Object.values(data)
+        console.log(data2)
         this.chartData.labels[0].push(data2.values)
       }
     } catch (error) {}

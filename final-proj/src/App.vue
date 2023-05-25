@@ -12,7 +12,7 @@ import { supabase } from './supabase'
 import { onMounted, ref } from 'vue'
 import BarChart from './components/PollingChart.vue'
 const prof = ref([])
-
+let temp = []
 onMounted(() => {
   yes()
 })
@@ -20,7 +20,8 @@ onMounted(() => {
 const yes = async function () {
   let { data } = await supabase.from('profiles').select('username')
   prof.value = data
-  console.log(data)
+  temp.push(data)
+  console.log(temp)
 }
 </script>
 
