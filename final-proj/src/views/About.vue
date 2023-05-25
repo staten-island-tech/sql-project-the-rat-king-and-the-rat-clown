@@ -1,15 +1,14 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div v-if="userSession.session">
+   You are logged in!!!!
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
+<script setup>
+import { userSessionStore } from '../stores/userSession'
+const userSession = userSessionStore()
+</script>
+
+<style lang="scss" scoped>
+
 </style>

@@ -14,26 +14,9 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      component: About,
-      meta: {
-        needsAuth: true
-      }
+      component: About
     }
   ]
-})
-
-router.beforeEach((to, from, next) => {
-  const userSession = userSessionStore()
-
-  if (to.meta.needsAuth) {
-    if (userSession.session) {
-      return next()
-    } else {
-      return next('/')
-    }
-  }
-
-  return next()
 })
 
 export default router

@@ -1,14 +1,16 @@
 <template>
+  <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+  </nav>
   <ul>
     <li v-for="profile in prof">{{ profile }}</li>
   </ul>
-  <div class="container" style="padding: 50px 0 100px 0">
-    <Account v-if="userSession.session" :session="session" />
-    <Auth v-else />
-  </div>
+  <RouterView></RouterView>
 </template>
 
 <script setup>
+import { RouterLink, RouterView } from 'vue-router'
 import { userSessionStore } from './stores/userSession.js'
 import { supabase } from './supabase'
 import { onMounted, ref } from 'vue'
