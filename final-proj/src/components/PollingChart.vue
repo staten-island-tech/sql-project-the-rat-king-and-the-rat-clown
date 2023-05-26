@@ -4,6 +4,7 @@
 
 <script>
 import { Bar } from 'vue-chartjs'
+import { supabase } from '../supabase'
 import { onMounted, ref } from 'vue'
 import {
   Chart as ChartJS,
@@ -23,6 +24,7 @@ export default {
   data() {
     return {
       loaded: false,
+      temp: [],
       chartData: {
         labels: [],
         datasets: [{ data: [1, 2, 3] }]
@@ -34,16 +36,11 @@ export default {
   },
   async mounted() {
     try {
-      onMounted(() => {
-        getsupabase()
-      })
-
-      let getsupabase = async function () {
-        let { data } = await supabase.from('countries').select('name')
-        let data2 = Object.values(data)
-        console.log(data2)
-        this.chartData.labels[0].push(data2.values)
-      }
+      let { data } = await supabase.from('countries').select('name')
+      let data2 = Object.values(data)
+      this.chartData.labels.push(data2)
+      console.log(this.chartData.labels)
+      this.loaded = true
     } catch (error) {}
   }
 }
