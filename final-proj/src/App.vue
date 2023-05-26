@@ -4,7 +4,7 @@
         <RouterLink to="/about">About</RouterLink>
   </nav>
   <ul>
-    <li v-for="profile in prof">{{ profile }}</li>
+    <li v-for="profile in prof">{{ profile.username }}</li>
   </ul>
   <RouterView></RouterView>
 </template>
@@ -31,7 +31,7 @@ onMounted(() => {
 })
 
 const yes = async function () {
-  let { data } = await supabase.from('profiles').select('username')
+  let { data } = await supabase.from('profiles').select('*')
   prof.value = data
 }
 </script>
