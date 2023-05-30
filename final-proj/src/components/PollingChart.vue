@@ -38,7 +38,8 @@ export default {
     try {
       let { data } = await supabase.from('countries').select('name')
       let data2 = Object.values(data)
-      this.chartData.labels.push(data2)
+      let res = JSON.stringify(data2)
+      this.chartData.labels.push(res)
       console.log(this.chartData.labels)
       this.loaded = true
     } catch (error) {}
