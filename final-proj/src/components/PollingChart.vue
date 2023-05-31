@@ -24,7 +24,6 @@ export default {
   data() {
     return {
       loaded: false,
-      temp: [],
       chartData: {
         labels: [],
         datasets: [{ data: [1, 2, 3] }]
@@ -36,11 +35,9 @@ export default {
   },
   async mounted() {
     try {
-      let { data } = await supabase.from('countries').select('name')
+      let data = await supabase.from('countries').select('name')
       let data2 = Object.values(data)
-      let res = JSON.stringify(data2)
-      this.chartData.labels.push(res)
-      console.log(this.chartData.labels)
+      data2[1].forEach((x) => this.chartData.labels.push(x.name))
       this.loaded = true
     } catch (error) {}
   }

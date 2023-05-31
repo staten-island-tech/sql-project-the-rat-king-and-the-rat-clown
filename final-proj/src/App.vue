@@ -6,6 +6,7 @@
   <ul>
     <li v-for="profile in prof">{{ profile.username }}</li>
   </ul>
+  <BarChart />
   <RouterView></RouterView>
 </template>
 
@@ -34,8 +35,6 @@ onMounted(() => {
 const yes = async function () {
   let { data } = await supabase.from('profiles').select('*')
   prof.value = data
-  temp.push(data)
-  console.log(temp)
 }
 </script>
 
