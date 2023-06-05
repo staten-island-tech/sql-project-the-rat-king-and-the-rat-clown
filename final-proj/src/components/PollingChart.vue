@@ -39,7 +39,6 @@ export default {
       let num = await supabase.from('countries').select('num')
       let num2 = Object.values(num)
       let data2 = Object.values(data)
-      console.log(num2)
       data2[1].forEach((x) => this.chartData.labels.push(x.name))
       num2[1].forEach((x) => this.chartData.datasets[0].data.push(x.num))
       this.loaded = true
