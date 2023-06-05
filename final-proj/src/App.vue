@@ -1,11 +1,9 @@
 <template>
   <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/post">Post</RouterLink>
+        <RouterLink to="/account">Account</RouterLink>
   </nav>
-  <ul>
-    <li v-for="profile in prof">{{ profile.username }}</li>
-  </ul>
   <RouterView></RouterView>
 </template>
 

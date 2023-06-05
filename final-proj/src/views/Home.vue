@@ -1,8 +1,10 @@
 <template>
-  <div class="container" style="padding: 50px 0 100px 0">
-    <Account v-if="userSession.session" :session="userSession.session" />
-    <Auth v-else />
+  <div v-if="userSession.session">
   </div>
+  <div v-else>Please log in to vote.</div>
+  <ul>
+    <li v-for="poll in polls">{{ poll.title }}</li>
+    </ul>
 </template>
 
 <script setup>
@@ -11,23 +13,16 @@ import { supabase } from '../supabase'
 import { onMounted, ref } from 'vue'
 import Account from '../components/Account.vue'
 import Auth from '../components/Auth.vue'
-const prof = ref([])
+const polls = ref([])
 const userSession = userSessionStore()
 
 onMounted(() => {
-  supabase.auth.getSession().then(({ data }) => {
-    userSession.session = data.session
-  })
-
-  supabase.auth.onAuthStateChange((_, _session) => {
-    userSession.session = _session
-  })
-  yes()
+  getPolls()
 })
 
-const yes = async function () {
-  let { data } = await supabase.from('profiles').select('username')
-  prof.value = data
+async function getPolls() {
+  let { data } = await supabase.from('polls').select('*')
+  console.log(data)
 }
 </script>
 
