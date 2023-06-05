@@ -23,6 +23,7 @@ onMounted(() => {
 async function getPolls() {
   let { data } = await supabase.from('polls').select('*')
   console.log(data)
+  polls.value = data
 }
 </script>
 
