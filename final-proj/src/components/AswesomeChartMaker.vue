@@ -1,5 +1,5 @@
 <template>
-  <Bar id="my-chart-id" v-if="loaded" :options="chartOptions" :data="chartData" />
+  <div></div>
 </template>
 
 <script>
@@ -9,20 +9,23 @@ import { supabase } from '../supabase'
 export default {
   name: 'chartcreator',
   components: { Bar },
-  Data() {
+  data() {
     return {
       loaded: false,
-      chartdata: {
-        label: [],
-        dataset: [{ data: [] }]
+      chartData: {
+        labels: this.labels,
+        datasets: [{ data: this.data }]
       },
-      chartOptions: {
-        responsive: true
-      }
+      results: [{ choice: [], num: [] }]
     }
   },
+
+  props: ['Array', 'data'],
+
   async mounted() {
     let title = await supabase.from('polls').select('title')
+    let title2 = Object.values(title)
+    console.log(title2)
   }
 }
 </script>

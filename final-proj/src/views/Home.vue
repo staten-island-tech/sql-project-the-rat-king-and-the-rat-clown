@@ -3,6 +3,9 @@
     <Account v-if="userSession.session" :session="userSession.session" />
     <Auth v-else />
   </div>
+  <div>
+    <chartcreator />
+  </div>
 </template>
 
 <script setup>
@@ -11,6 +14,7 @@ import { supabase } from '../supabase'
 import { onMounted, ref } from 'vue'
 import Account from '../components/Account.vue'
 import Auth from '../components/Auth.vue'
+import chartcreator from '../components/AswesomeChartMaker.vue'
 const prof = ref([])
 const userSession = userSessionStore()
 
@@ -30,7 +34,10 @@ const yes = async function () {
   prof.value = data
 }
 </script>
-
-<style lang="scss" scoped>
-
-</style>
+<script>
+export default {
+  name: 'Home',
+  components: { chartcreator }
+}
+</script>
+<style lang="scss" scoped></style>
