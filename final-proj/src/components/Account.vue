@@ -21,7 +21,7 @@ async function getProfile() {
 
     let { data, error, status } = await supabase
       .from('profiles')
-      .select(`username, website, avatar_url`)
+      .select(`username, website, avatar_url, id`)
       .eq('id', user.id)
       .single()
     
@@ -53,7 +53,6 @@ async function updateProfile() {
       avatar_url: avatar_url.value,
       updated_at: new Date(),
     }
-    userSession.prof = updates
     console.log(userSession.prof)
     let { error } = await supabase.from('profiles').upsert(updates)
     
@@ -61,6 +60,7 @@ async function updateProfile() {
   } catch (error) {
     alert(error.message)
   } finally {
+    getProfile()
     loading.value = false
   }
 }
@@ -88,10 +88,6 @@ async function signOut() {
     <div>
       <label for="username">Name</label>
       <input id="username" type="text" v-model="username" />
-    </div>
-    <div>
-      <label for="website">Website</label>
-      <input id="website" type="url" v-model="website" />
     </div>
 
     <div>

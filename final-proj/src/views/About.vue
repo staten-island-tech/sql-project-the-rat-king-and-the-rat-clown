@@ -28,12 +28,16 @@ let choice2 = ''
 async function getPolls() {
   let { data } = await supabase.from('polls').select('*')
   polls.value = data
+  console.log(polls)
+  console.log(userSession.prof)
+  let userPolls = Object.values(polls).filter(poll => poll.creatorId === userSession.prof.id)
+  console.log(userPolls )
 }
 async function createPoll(){
   const { data, error } = await supabase
   .from('polls')
   .insert([
-    { title: pollTitle, choice1: choice1, choice1value: 0, choice2: choice2, choice2value: 0 },
+    { title: pollTitle, choice1: choice1, choice1value: 0, choice2: choice2, choice2value: 0, creator: userSession.prof.username, creatorId: userSession.prof.id },
   ])
   getPolls()
 }
