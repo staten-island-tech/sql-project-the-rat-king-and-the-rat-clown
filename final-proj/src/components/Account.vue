@@ -1,10 +1,10 @@
 <script setup>
 import { supabase } from '../supabase'
 import { onMounted, ref, toRefs } from 'vue'
-
+import { userSessionStore } from '../stores/userSession'
 const props = defineProps(['session'])
 const { session } = toRefs(props)
-
+const userSession = userSessionStore()
 const loading = ref(true)
 const username = ref('')
 const website = ref('')
@@ -24,17 +24,19 @@ async function getProfile() {
       .select(`username, website, avatar_url`)
       .eq('id', user.id)
       .single()
-
+    
     if (error && status !== 406) throw error
 
     if (data) {
       username.value = data.username
       website.value = data.website
       avatar_url.value = data.avatar_url
+      userSession.prof = data
     }
   } catch (error) {
     alert(error.message)
   } finally {
+    console.log(userSession.prof)
     loading.value = false
   }
 }
@@ -51,9 +53,10 @@ async function updateProfile() {
       avatar_url: avatar_url.value,
       updated_at: new Date(),
     }
-
+    userSession.prof = updates
+    console.log(userSession.prof)
     let { error } = await supabase.from('profiles').upsert(updates)
-
+    
     if (error) throw error
   } catch (error) {
     alert(error.message)
@@ -65,6 +68,7 @@ async function updateProfile() {
 async function signOut() {
   try {
     loading.value = true
+    userSession.prof = ref()
     let { error } = await supabase.auth.signOut()
     if (error) throw error
   } catch (error) {

@@ -4,6 +4,7 @@ import { ref } from 'vue'
 export const userSessionStore = defineStore({
   id: 'userSession',
   state: () => ({
-    session: ref()
+    session: ref(),
+    prof: ref()
   })
 })

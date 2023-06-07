@@ -27,6 +27,7 @@ onMounted(() => {
     userSession.session = _session
   })
   yes()
+  console.log(userSession)
 })
 
 const yes = async function () {
