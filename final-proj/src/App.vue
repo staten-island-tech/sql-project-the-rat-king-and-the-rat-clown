@@ -43,6 +43,11 @@ export default {
   name: 'App',
   components: { BarChart }
 }
+
+let obj = { name: 'yes' }
+let arr = []
+arr.push(obj)
+console.log(arr)
 </script>
 
 <style></style>

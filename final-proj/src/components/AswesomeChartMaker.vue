@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    <Bar v-if="loaded"></Bar>
+  </div>
 </template>
 
 <script>
@@ -23,9 +25,14 @@ export default {
   props: ['Array', 'data'],
 
   async mounted() {
-    let title = await supabase.from('polls').select('title')
-    let title2 = Object.values(title)
-    console.log(title2)
+    try {
+      let choice1 = await supabase.from('polls').select('choice1')
+      console.log(choice1.data)
+      choice1.data.forEach((x) => this.results[0].choice.push(x))
+      console.log(this.results[0].choice)
+    } catch (error) {
+      console.log('error')
+    }
   }
 }
 </script>
