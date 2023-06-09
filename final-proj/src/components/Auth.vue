@@ -26,7 +26,7 @@ const handleLogin = async () => {
 <template>
   <form class="row flex-center flex" @submit.prevent="handleLogin">
     <div class="col-6 form-widget">
-      <h1 class="header">Sign in to Continue</h1>
+      <h1 class="header">Sign in</h1>
       <p class="description">Enter your email to receive the sign in link below.</p>
       <div>
         <input class="inputField" required type="email" placeholder="Your email" v-model="email" />

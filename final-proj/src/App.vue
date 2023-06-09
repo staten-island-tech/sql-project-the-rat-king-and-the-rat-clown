@@ -1,11 +1,9 @@
 <template>
   <nav>
-    <RouterLink to="/">Home</RouterLink>
-    <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/home">Polls</RouterLink>
+        <RouterLink to="/post">Post</RouterLink>
+        <RouterLink to="/">Account</RouterLink>
   </nav>
-  <ul>
-    <li v-for="profile in prof">{{ profile.username }}</li>
-  </ul>
   <RouterView></RouterView>
 </template>
 
@@ -13,13 +11,12 @@
 import { RouterLink, RouterView } from 'vue-router'
 import { userSessionStore } from './stores/userSession.js'
 import { supabase } from './supabase'
-import { onMounted, ref } from 'vue'
+import { onMounted, ref, toRefs } from 'vue'
 import BarChart from './components/PollingChart.vue'
 import Account from './components/Account.vue'
 import Auth from './components/Auth.vue'
 const prof = ref([])
 const userSession = userSessionStore()
-
 onMounted(() => {
   supabase.auth.getSession().then(({ data }) => {
     userSession.session = data.session
@@ -29,6 +26,7 @@ onMounted(() => {
     userSession.session = _session
   })
   yes()
+  console.log(userSession)
 })
 
 const yes = async function () {
@@ -37,16 +35,6 @@ const yes = async function () {
 }
 </script>
 
-<script>
-export default {
-  name: 'App',
-  components: { BarChart }
-}
 
-let obj = { name: 'yes' }
-let arr = []
-arr.push(obj)
-console.log(arr)
-</script>
 
 <style></style>
