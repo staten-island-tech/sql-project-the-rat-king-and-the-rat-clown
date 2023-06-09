@@ -7,7 +7,7 @@
     <button>Create Poll</button>    
   </form>
   <ul>
-    <li v-for="poll in polls">{{ poll.title }} <button @click="deletePoll(poll)">Delete</button></li>
+    <li v-for="poll in userPolls">{{ poll.title }} <button @click="deletePoll(poll)">Delete</button></li>
   </ul>
   </div>
   <div v-else>
@@ -18,8 +18,9 @@
 <script setup>
 import { userSessionStore } from '../stores/userSession'
 import { supabase } from '../supabase'
-import { onMounted, ref } from 'vue'
-const polls = ref([])
+import { onMounted, queuePostFlushCb, ref } from 'vue'
+const userPolls = ref([])
+let polls = ref([])
 const userSession = userSessionStore()
 console.log(userSession)
 let pollTitle = ''
@@ -28,10 +29,11 @@ let choice2 = ''
 async function getPolls() {
   let { data } = await supabase.from('polls').select('*')
   polls.value = data
-  console.log(polls)
-  console.log(userSession.prof)
-  let userPolls = Object.values(polls).filter(poll => poll.creatorId === userSession.prof.id)
-  console.log(userPolls )
+}
+async function getUserPolls(){
+  console.log(polls.value)
+  userPolls.value = polls.value.filter(poll => poll.creatorId === userSession.prof.id)
+  console.log(userPolls.value)
 }
 async function createPoll(){
   const { data, error } = await supabase
@@ -39,17 +41,17 @@ async function createPoll(){
   .insert([
     { title: pollTitle, choice1: choice1, choice1value: 0, choice2: choice2, choice2value: 0, creator: userSession.prof.username, creatorId: userSession.prof.id },
   ])
-  getPolls()
+  getPolls().then(()=>getUserPolls())
 }
 async function deletePoll(poll){
 const { data, error } = await supabase
   .from('polls')
   .delete()
   .eq('id', poll.id)
-  getPolls()
+  getPolls().then(()=>getUserPolls())
 }
-onMounted(() => {
-  getPolls()
+onMounted (async() => {
+  getPolls().then(()=>getUserPolls())
 })
 </script>
 
