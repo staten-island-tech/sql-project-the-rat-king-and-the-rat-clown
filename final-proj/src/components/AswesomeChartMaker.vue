@@ -1,41 +1,34 @@
 <template>
   <div>
-    <Bar v-if="loaded" ></Bar>
+    <canvas ref="chartCanvas"></canvas>
   </div>
 </template>
 
 <script>
-import { onMounted } from 'vue'
-import { Bar } from 'vue-chartjs'
-import { supabase } from '../supabase'
+import { Bar } from 'vue-chartjs';
+
 export default {
-  name: 'chartcreator',
-  components: { Bar },
-  data() {
-    return {
-      loaded: false,
-      chartData: {
-        labels: [],
-        datasets: [{ data: [] }]
-      },
-      results: [{ choice: [], num: [] }]
-    }
+  name:"chartcreator",
+  extends: Bar,
+  props: {
+    data: {
+      type: Array,
+      required: true,
+    },
   },
-
-  props: ['labels', 'data'],
-
-  async mounted() {
-    try {
-      let choice1 = await supabase.from('polls').select('choice1')
-      let yes = await supabase.from('polls').select('choice1value')
-      choice1.data.forEach((x) => this.chartData.labels.push(x))
-      yes.data.forEach((x) => this.chartData.datasets[0].data.push(x))
-      console.log(this.chartData)
-    } catch (error) {
-      console.log('error')
-    }
-  }
-}
+  mounted() {
+    this.renderChart({
+      labels: this.data.map(item => item.label),
+      datasets: [
+        {
+          label: 'Bar Chart',
+          backgroundColor: 'blue',
+          data: this.data.map(item => item.value),
+        },
+      ],
+    });
+  },
+};
 </script>
 
 <style lang="scss" scoped></style>

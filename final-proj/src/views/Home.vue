@@ -11,6 +11,7 @@ import { supabase } from '../supabase'
 import { onMounted, ref } from 'vue'
 import Account from '../components/Account.vue'
 import Auth from '../components/Auth.vue'
+import chartcreator from '../components/AswesomeChartMaker.vue'
 const prof = ref([])
 const userSession = userSessionStore()
 
@@ -28,6 +29,12 @@ onMounted(() => {
 const yes = async function () {
   let { data } = await supabase.from('profiles').select('username')
   prof.value = data
+}
+</script>
+<script>
+export default {
+  name: 'Home',
+  components: { chartcreator }
 }
 </script>
 <style lang="scss" scoped></style>
