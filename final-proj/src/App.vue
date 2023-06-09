@@ -6,7 +6,7 @@
   <ul>
     <li v-for="profile in prof">{{ profile.username }}</li>
   </ul>
-  <BarChart />
+  <chartcreator/>
   <RouterView></RouterView>
 </template>
 
@@ -16,6 +16,7 @@ import { userSessionStore } from './stores/userSession.js'
 import { supabase } from './supabase'
 import { onMounted, ref } from 'vue'
 import BarChart from './components/PollingChart.vue'
+import chartcreator from './components/AswesomeChartMaker.vue'
 import Account from './components/Account.vue'
 import Auth from './components/Auth.vue'
 const prof = ref([])
@@ -41,7 +42,7 @@ const yes = async function () {
 <script>
 export default {
   name: 'App',
-  components: { BarChart }
+  components: { BarChart , chartcreator}
 }
 
 let obj = { name: 'yes' }

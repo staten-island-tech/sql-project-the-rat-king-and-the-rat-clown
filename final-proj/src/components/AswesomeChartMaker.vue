@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Bar v-if="loaded"></Bar>
+    <Bar v-if="loaded" ></Bar>
   </div>
 </template>
 
@@ -15,21 +15,22 @@ export default {
     return {
       loaded: false,
       chartData: {
-        labels: this.labels,
-        datasets: [{ data: this.data }]
+        labels: [],
+        datasets: [{ data: [] }]
       },
       results: [{ choice: [], num: [] }]
     }
   },
 
-  props: ['Array', 'data'],
+  props: ['labels', 'data'],
 
   async mounted() {
     try {
       let choice1 = await supabase.from('polls').select('choice1')
-      console.log(choice1.data)
-      choice1.data.forEach((x) => this.results[0].choice.push(x))
-      console.log(this.results[0].choice)
+      let yes = await supabase.from('polls').select('choice1value')
+      choice1.data.forEach((x) => this.chartData.labels.push(x))
+      yes.data.forEach((x) => this.chartData.datasets[0].data.push(x))
+      console.log(this.chartData)
     } catch (error) {
       console.log('error')
     }
